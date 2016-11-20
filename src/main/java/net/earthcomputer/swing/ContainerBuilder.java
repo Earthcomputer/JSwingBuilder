@@ -26,8 +26,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -277,6 +279,14 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 
 	public <CHILD extends JComponentBuilder<JPanel, THIS, CHILD>> CHILD pageAxisPanel() {
 		return (CHILD) panel().pageAxisLayout();
+	}
+
+	public <E, CHILD extends JComboBoxBuilder<E, JComboBox<E>, THIS, CHILD>> CHILD comboBox(Class<E> elementType) {
+		return (CHILD) childComponent(JComboBox.class, JComboBoxBuilder.class);
+	}
+
+	public <E, CHILD extends JListBuilder<E, JList<E>, THIS, CHILD>> CHILD list(Class<E> elementType) {
+		return (CHILD) childComponent(JList.class, JListBuilder.class);
 	}
 
 	public THIS gapWithWidth(int width) {
