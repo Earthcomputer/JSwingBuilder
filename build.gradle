@@ -1,9 +1,48 @@
 
+buildscript {
+	repositories {
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	dependencies {
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+	}
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+configurations {
+	normal
+}
+
+publishing {
+	publications {
+		normal(MavenPublication) {
+			artifactId = 'jswingbuilder'
+			from components.java
+		}
+	}
+}
+
+bintray {
+	user = bintrayUser
+	key = bintrayKey
+	dryRun = false
+	publish = false
+	pkg {
+		repo = 'util'
+		name = 'jswingbuilder'
+		configurations = ['normal']
+		publications = ['normal']
+	}
+}
 
 group = 'net.earthcomputer.util'
-version = '-1'
+version = '0.0.2-experimental'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
