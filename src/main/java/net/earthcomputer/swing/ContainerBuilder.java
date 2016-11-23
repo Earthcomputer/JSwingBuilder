@@ -31,6 +31,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -287,6 +288,10 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 
 	public <E, CHILD extends JListBuilder<E, JList<E>, THIS, CHILD>> CHILD list(Class<E> elementType) {
 		return (CHILD) childComponent(JList.class, JListBuilder.class);
+	}
+
+	public <CHILD extends JProgressBarBuilder<JProgressBar, THIS, CHILD>> CHILD progressBar() {
+		return (CHILD) childComponent(JProgressBar.class, JProgressBarBuilder.class);
 	}
 
 	public THIS gapWithWidth(int width) {
