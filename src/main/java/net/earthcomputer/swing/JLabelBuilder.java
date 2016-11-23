@@ -1,5 +1,7 @@
 package net.earthcomputer.swing;
 
+import java.util.Map;
+
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
@@ -7,8 +9,8 @@ import javax.swing.JLabel;
 public class JLabelBuilder<COMPONENT extends JLabel, PARENT, THIS extends JLabelBuilder<COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JLabelBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JLabelBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS disabledIcon(Icon icon) {

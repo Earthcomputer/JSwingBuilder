@@ -1,5 +1,7 @@
 package net.earthcomputer.swing;
 
+import java.util.Map;
+
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.event.MenuDragMouseListener;
@@ -9,8 +11,8 @@ import javax.swing.event.MenuKeyListener;
 public class JMenuItemBuilder<COMPONENT extends JMenuItem, PARENT, THIS extends JMenuItemBuilder<COMPONENT, PARENT, THIS>>
 		extends JButtonBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JMenuItemBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JMenuItemBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS menuDragMouseListener(MenuDragMouseListener listener) {

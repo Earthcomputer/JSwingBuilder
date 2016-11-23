@@ -2,6 +2,7 @@ package net.earthcomputer.swing;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
@@ -11,8 +12,8 @@ import javax.swing.Icon;
 public class JButtonBuilder<COMPONENT extends AbstractButton, PARENT, THIS extends JButtonBuilder<COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JButtonBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JButtonBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS onPressed(ActionListener listener) {

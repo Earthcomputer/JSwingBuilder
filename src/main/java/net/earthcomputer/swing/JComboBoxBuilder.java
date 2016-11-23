@@ -2,6 +2,7 @@ package net.earthcomputer.swing;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.util.Map;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
@@ -14,8 +15,8 @@ import javax.swing.event.PopupMenuListener;
 public class JComboBoxBuilder<E, COMPONENT extends JComboBox<E>, PARENT, THIS extends JComboBoxBuilder<E, COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JComboBoxBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JComboBoxBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS onChange(ActionListener listener) {

@@ -1,13 +1,15 @@
 package net.earthcomputer.swing;
 
+import java.util.Map;
+
 import javax.swing.JTextArea;
 
 @SuppressWarnings("unchecked")
 public class JTextAreaBuilder<COMPONENT extends JTextArea, PARENT, THIS extends JTextAreaBuilder<COMPONENT, PARENT, THIS>>
 		extends JTextComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JTextAreaBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JTextAreaBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS columns(int cols) {

@@ -1,6 +1,7 @@
 package net.earthcomputer.swing;
 
 import java.awt.Insets;
+import java.util.Map;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -10,8 +11,8 @@ import javax.swing.event.ChangeListener;
 public class JMenuBarBuilder<COMPONENT extends JMenuBar, PARENT, THIS extends JMenuBarBuilder<COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JMenuBarBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JMenuBarBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public <CHILD extends JMenuBuilder<JMenu, THIS, CHILD>> CHILD menu() {

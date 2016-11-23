@@ -1,5 +1,7 @@
 package net.earthcomputer.swing;
 
+import java.util.Map;
+
 import javax.swing.BoundedRangeModel;
 import javax.swing.JProgressBar;
 import javax.swing.event.ChangeListener;
@@ -8,8 +10,8 @@ import javax.swing.event.ChangeListener;
 public class JProgressBarBuilder<COMPONENT extends JProgressBar, PARENT, THIS extends JProgressBarBuilder<COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JProgressBarBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JProgressBarBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS changeListener(ChangeListener listener) {

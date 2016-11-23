@@ -1,6 +1,8 @@
 package net.earthcomputer.swing;
 
 import java.beans.VetoableChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.ActionMap;
@@ -20,21 +22,26 @@ public class JComponentBuilder<COMPONENT extends JComponent, PARENT, THIS extend
 
 	// CREATION
 	public static <PARENT, THIS extends JComponentBuilder<JPanel, PARENT, THIS>> THIS create() {
-		return create(new JPanel());
+		return (create(new HashMap<>()));
+	}
+	
+	public static <PARENT, THIS extends JComponentBuilder<JPanel, PARENT, THIS>> THIS create(
+			Map<Object, Object> references) {
+		return create(new JPanel(), references);
 	}
 
 	public static <COMPONENT extends JComponent, PARENT, THIS extends JComponentBuilder<COMPONENT, PARENT, THIS>> THIS create(
-			Class<COMPONENT> componentClass) {
-		return create(newInstance(componentClass));
+			Class<COMPONENT> componentClass, Map<Object, Object> references) {
+		return create(newInstance(componentClass), references);
 	}
 
 	public static <COMPONENT extends JComponent, PARENT, THIS extends JComponentBuilder<COMPONENT, PARENT, THIS>> THIS create(
-			COMPONENT component) {
-		return (THIS) new JComponentBuilder<>(null, component);
+			COMPONENT component, Map<Object, Object> references) {
+		return (THIS) new JComponentBuilder<>(references, null, component);
 	}
 
-	protected JComponentBuilder(PARENT parent, COMPONENT toAddTo) {
-		this.component = toAddTo;
+	protected JComponentBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	// BORDERS

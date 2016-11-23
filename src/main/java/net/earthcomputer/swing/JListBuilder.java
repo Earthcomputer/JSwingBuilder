@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
@@ -20,8 +21,8 @@ public class JListBuilder<E, COMPONENT extends JList<E>, PARENT, THIS extends JL
 	private boolean hasSetModel = false;
 	private List<E> items = new ArrayList<>();
 
-	protected JListBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JListBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 
 	public THIS item(E item) {

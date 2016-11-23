@@ -20,7 +20,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,8 +45,19 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 	// FIELDS
 	protected PARENT parent;
 	protected COMPONENT component;
+	protected Map<Object, Object> references = new HashMap<>();
+
+	protected ContainerBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		this.parent = parent;
+		this.component = toAddTo;
+	}
 
 	// PROPERTIES
+	public THIS ref(Object id) {
+		references.put(id, component);
+		return (THIS) this;
+	}
+	
 	public THIS containerListener(ContainerListener listener) {
 		component.addContainerListener(listener);
 		return (THIS) this;
@@ -255,7 +269,7 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 	}
 
 	public ButtonGroupBuilder<THIS> buttonGroup() {
-		return new ButtonGroupBuilder<>((THIS) this);
+		return new ButtonGroupBuilder<>(references, (THIS) this);
 	}
 
 	public <CHILD extends JTextFieldBuilder<JTextField, THIS, CHILD>> CHILD textField() {
@@ -317,8 +331,9 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 	public <CHILD_COMPONENT extends JComponent, CHILD extends JComponentBuilder<CHILD_COMPONENT, THIS, CHILD>> CHILD childComponent(
 			Class<CHILD_COMPONENT> componentClass, Class<CHILD> builderClass) {
 		try {
-			return (CHILD) builderClass.getConstructor(Object.class, JComponent.class).newInstance(this,
-					newInstance(componentClass));
+			Constructor<CHILD> ctor = getComponentConstructor(builderClass, componentClass);
+			ctor.setAccessible(true);
+			return ctor.newInstance(references, this, newInstance(componentClass));
 		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
 				| InvocationTargetException e) {
 			throw new Error(e);
@@ -345,5 +360,22 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalArgumentException("Must be able to instantiate class via a no-arg constructor", e);
 		}
+	}
+
+	protected static <T> Constructor<T> getComponentConstructor(Class<T> builderClass, Class<?> componentClass)
+			throws NoSuchMethodException {
+		Constructor<T> ctor = null;
+		while (ctor == null && componentClass != null) {
+			try {
+				ctor = builderClass.getDeclaredConstructor(Map.class, Object.class, componentClass);
+			} catch (NoSuchMethodException e) {
+				componentClass = componentClass.getSuperclass();
+			}
+		}
+		if (ctor == null) {
+			throw new NoSuchMethodException(builderClass.getName() + ".<init>(java.util.Map,java.lang.Object,"
+					+ componentClass.getName() + ")");
+		}
+		return ctor;
 	}
 }

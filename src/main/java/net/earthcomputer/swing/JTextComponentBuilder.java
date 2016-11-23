@@ -3,6 +3,7 @@ package net.earthcomputer.swing;
 import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.InputMethodListener;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.swing.DropMode;
@@ -20,8 +21,8 @@ import javax.swing.text.NavigationFilter;
 public class JTextComponentBuilder<COMPONENT extends JTextComponent, PARENT, THIS extends JTextComponentBuilder<COMPONENT, PARENT, THIS>>
 		extends JComponentBuilder<COMPONENT, PARENT, THIS> {
 
-	protected JTextComponentBuilder(PARENT parent, COMPONENT toAddTo) {
-		super(parent, toAddTo);
+	protected JTextComponentBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
+		super(references, parent, toAddTo);
 	}
 	
 	public THIS caretListener(CaretListener listener) {
