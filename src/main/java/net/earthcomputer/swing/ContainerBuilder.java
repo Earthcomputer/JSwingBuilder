@@ -50,6 +50,7 @@ public class ContainerBuilder<COMPONENT extends Container, PARENT, THIS extends 
 	protected ContainerBuilder(Map<Object, Object> references, PARENT parent, COMPONENT toAddTo) {
 		this.parent = parent;
 		this.component = toAddTo;
+		this.references = references;
 	}
 
 	// PROPERTIES
